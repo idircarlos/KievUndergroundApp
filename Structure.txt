@@ -1,0 +1,20 @@
+#1 Node Object
+    int id, int coordinates, Pair<Node, GDistance>[] connections
+
+#2 BackEnd
+    Map<int (idNode), Node> database
+    int HDistBetweenTwoNodes(int localCoords, int destCoords)
+        Calculus with coordinates between them
+
+    Node getNode(int NodeId)
+        database.get(NodeId)
+
+    path AStar(int originId, int destinationId)
+        getNode(originId) & getNode(destinationId)
+        Calculus of the A* algorithm with this Nodes
+    
+#3 FronEnd
+    Tkinter GUI
+    First aproach: 
+        underground png, from_box, to_box
+        Calculate from->to and print path
