@@ -4,7 +4,7 @@ class stop:
     longitude = 0
     connections = []
 
-    def __init__(self, id, latitude, longitude):
+    def __init__(self, id, longitude, latitude):
         self.id = id
         self.latitude = latitude
         self.longitude = longitude
