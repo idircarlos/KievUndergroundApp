@@ -18,5 +18,3 @@
     First aproach: 
         underground png, from_box, to_box
         Calculate from->to and print path
-
-Maquinon
