@@ -1,10 +1,6 @@
 import backend as bk
+import database as db
 from stop import *
 
-a = stop(1,3,4)
-b = stop(4,3,4)
 
-prueba = bk.var
-
-c = bk.distance_from_stops(a,b)
-print(c)
+bk.a_estrella(db.stop_116,db.stop_214)
