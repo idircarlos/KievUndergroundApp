@@ -1,12 +1,14 @@
 from copy import deepcopy
 class stop:
     id = 0
+    name = ""
     latitude = 0
     longitude = 0
     connections = []
 
-    def __init__(self, id, longitude, latitude):
+    def __init__(self, id, name, longitude, latitude):
         self.id = id
+        self.name = name
         self.latitude = latitude
         self.longitude = longitude
         self.connections = []
@@ -16,4 +18,4 @@ class stop:
     
 
     def __repr__(self):
-        return str(self.id)
+        return self.name
