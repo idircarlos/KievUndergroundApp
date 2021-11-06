@@ -1,8 +1,14 @@
 from math import *
+
+database = [] # [Node, distance]
+
+# Add all stops
+
+
 def distance_from_stops(start, finish):
     """Calulate the distance in km between two points on the earth (specified in decimal degrees)"""
     # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(radians, [start.lon, start.lat, finish.lon, finish.lat])
+    lon1, lat1, lon2, lat2 = map(radians, [start.longitude, start.latitude, finish.longitude, finish.latitude])
 
     # haversine formula
     dlon = lon2 - lon1
