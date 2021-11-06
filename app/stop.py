@@ -1,3 +1,4 @@
+from copy import deepcopy
 class stop:
     id = 0
     latitude = 0
@@ -8,6 +9,11 @@ class stop:
         self.id = id
         self.latitude = latitude
         self.longitude = longitude
+        self.connections = []
 
     def add_connection(self, stop, distance):
         self.connections.append((stop,distance))
+    
+
+    def __repr__(self):
+        return str(self.id)
