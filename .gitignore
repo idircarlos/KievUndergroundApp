@@ -1,6 +1,4 @@
 # Ignora la carpeta de vscode
 .vscode
 
-# Ignora la carpeta que contiene los .class
-bin/
-/bin/*
+__pycache__
