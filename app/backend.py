@@ -3,6 +3,7 @@ from math import *
 database = [] # [Node, distance]
 
 # Add all stops
+var = 5
 
 
 def distance_from_stops(start, finish):
@@ -36,7 +37,3 @@ def a_star(start, end, trans):
 
         close_list[this_node_id] = this_node["father"]
         del open_list[this_node_id]
-        
-
-
-print(distance_from_stops(40.594411, -3.981183, 40.595810, -3.985004))

@@ -12,8 +12,12 @@
     path AStar(int originId, int destinationId)
         getNode(originId) & getNode(destinationId)
         Calculus of the A* algorithm with this Nodes
-    
-#3 FronEnd
+
+#3 database
+    Stop_id = stop(id, longitude, latitude)
+    stop_id.add_connections(stop_id_conn, distanceG)
+
+#4 FronEnd
     Tkinter GUI
     First aproach: 
         underground png, from_box, to_box
