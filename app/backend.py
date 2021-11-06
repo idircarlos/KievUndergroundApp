@@ -1,123 +1,84 @@
 from math import *
 import database as db
 
-def distance_from_stops(start, finish):
-    """Calulate the distance in km between two points on the earth (specified in decimal degrees)"""
-    # convert decimal degrees to radians
-    lon1, lat1, lon2, lat2 = map(radians, [start.longitude, start.latitude, finish.longitude, finish.latitude])
+# Calcula la distancia entre dos puntos de la tierra en km, se usa para obtener h()
+def distancia_entre_dos_paradas(inicio, fin):
+    # Convierte de decimales a radianes
+    lon1, lat1, lon2, lat2 = map(radians, [inicio.longitude, inicio.latitude, fin.longitude, fin.latitude])
 
-    # haversine formula
+    # Formula haversine
     dlon = lon2 - lon1
     dlat = lat2 - lat1
     a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
     c = 2 * asin(sqrt(a))
-    r = 6371 # Radius of earth in km
+    r = 6371 # Radio de la tierra en km
     
-    # Return distance in km
-    return c * r 
+    return c * r # Distancia en km
 
-def a_star(start, end):
-    initial_distance = distance_from_stops(start,end) if start != end else 0
-    open_list = {start: {"g": 0, "h": initial_distance, "f": initial_distance, "father": -1}}
-    close_list = {} #{idNodo : idNodoPadre}
-    final_weight = 0
+# Algoritmo A*, basado en la implemtacion de f() = g() + h()
+def a_estrella(inicio, fin):
+    # Lista de paradas que han sido estudiadas pero sus vecinos aun no
+    lista_abierta = set([inicio])
+    # Lista de paradas que ya han sido estudiadas incluyendo sus vecinos
+    lista_cerrada = set([])
 
-    # f(n) = g(n) + h(n)
-    while(end not in close_list.keys()):
-        this_node_id = sorted(open_list, key=lambda elem: open_list[elem]["f"])[0]
-        this_node = open_list[this_node_id].copy()
+    # Contiene las distancias actuales del comienzo al resto de nodos f(), su valor por defecto es +infinito
+    distancias_f = {}
+    distancias_f[inicio] = 0
 
-        if(this_node == end):
-            final_weight = this_node["f"]
+    # Contiene un mapeado de todas las paradas adyacentes
+    adyacentes = {}
+    adyacentes[inicio] = inicio
 
-        close_list[this_node_id] = this_node["father"]
-        del open_list[this_node_id]
-        if(len(this_node.conn) == 0):
-            continue
-
-        ####################################################################
-
-def a_star_algorithm(start, end):
-    # In this open_lst is a list of nodes which have been visited, but who's 
-    # neighbours haven't all been always inspected, It starts off with the start node
-    # And closed_list is a list of nodes which have been visited
-    # and who's neighbors have been always inspected
-    open_lst = set([start])
-    closed_lst = set([])
-
-    # poo has present distances from start to all other nodes
-    # the default value is +infinity
-    distances = {}
-    distances[start] = 0
-
-    # par contains an adjac mapping of all nodes
-    adjacents = {}
-    adjacents[start] = start
-
-    i=1
-    while end not in closed_lst:
+    while fin not in lista_cerrada:
         estudiando = None
-        print("iteracion: " +str(i))
-        # it will find a node with the lowest value of f() -
-        for v in open_lst:
-            if estudiando == None or distances[v] + distance_from_stops(v, end) < distances[estudiando] + distance_from_stops(estudiando, end):
-                #print(v)
-                #print(distance_from_stops(v, end))
-                #print(distance_from_stops(db.stop_111, end))
+        # Busca un nodo con el menor valor f()
+        for v in lista_abierta:
+            if estudiando == None or distancias_f[v] + distancia_entre_dos_paradas(v, fin) < distancias_f[estudiando] + distancia_entre_dos_paradas(estudiando, fin):
                 estudiando = v
 
         if estudiando == None:
-            print('Path does not exist!')
+            print('No existe el camino')
             return None
 
-        # if the current node is the stop
-        # then we start again from start
-        if estudiando == end:
-            reconst_path = []
+        # Si el nodo estudiando es el final empezamos otra vez desde el inicio
+        if estudiando == fin:
+            reconstruir_camino = []
 
-            while adjacents[estudiando] != estudiando:
-                reconst_path.append(estudiando)
-                estudiando = adjacents[estudiando]
+            while adyacentes[estudiando] != estudiando:
+                reconstruir_camino.append(estudiando)
+                estudiando = adyacentes[estudiando]
 
-            reconst_path.append(start)
+            reconstruir_camino.append(inicio)
+            reconstruir_camino.reverse()
 
-            reconst_path.reverse()
+            print('Camino encontrado: {}'.format(reconstruir_camino))
+            return reconstruir_camino
 
-            print('Path found: {}'.format(reconst_path))
-            return reconst_path
+        # Para todos los vecinos miramos:
+        for (vecino, peso_g) in estudiando.connections:
+            # Si el nodo no esta ni en la lista cerrada ni en la abierta
+            # se le anade a la lista abierta y se guarda como adyacente
+            if vecino not in lista_abierta and vecino not in lista_cerrada:
+                lista_abierta.add(vecino)
+                adyacentes[vecino] = estudiando
+                distancias_f[vecino] = distancias_f[estudiando] + peso_g
 
-        # for all the neighbors of the current node do
-        print(estudiando)
-        print(estudiando.connections)
-        for (m, weight) in estudiando.connections:
-            print("Entra for con: "+ str(m))
-            # if the current node is not presentin both open_lst and closed_lst
-            # add it to open_lst and note n as it's par
-            if m not in open_lst and m not in closed_lst:
-                print("Entra if con: " +str(m))
-                open_lst.add(m)
-                adjacents[m] = estudiando
-                distances[m] = distances[estudiando] + weight
-
-            # otherwise, check if it's quicker to first visit n, then m
-            # and if it is, update par data and poo data
-            # and if the node was in the closed_lst, move it to open_lst
+            # Sino, miramos si es mas rapido visitar el vecino 
+            # Si lo es actualiza distnacia_f y adyacentes
             else:
-                print("Entra else con: " + str(m))
-                if distances[m] > distances[estudiando] + weight:
-                    distances[m] = distances[estudiando] + weight
-                    adjacents[m] = estudiando
+                if distancias_f[vecino] > distancias_f[estudiando] + peso_g:
+                    distancias_f[vecino] = distancias_f[estudiando] + peso_g
+                    adyacentes[vecino] = estudiando
+                    # Si el nodo estaba en la lista cerrada lo movemos a la lista abierta
+                    if vecino in lista_cerrada:
+                        lista_cerrada.remove(vecino)
+                        lista_abierta.add(vecino)
 
-                    if m in closed_lst:
-                        closed_lst.remove(m)
-                        open_lst.add(m)
+        # Borra el nodo estudiando de la lista abierta y lo anade
+        #  a la cerrada porque ya hemos analizado todos sus vecinos
+        lista_abierta.remove(estudiando)
+        lista_cerrada.add(estudiando)
 
-        # remove n from the open_lst, and add it to closed_lst
-        # because all of his neighbors were inspected
-        open_lst.remove(estudiando)
-        closed_lst.add(estudiando)
-        print()
-        i = i + 1
-
-    print('Path does not exist!')
+    print('No existe el camino')
     return None
