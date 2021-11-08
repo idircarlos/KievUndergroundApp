@@ -1,7 +1,8 @@
 from stop import *
 
+
 #LINEA 1
-stop_110 = stop(110, "Akademmistechko", 50.465015978082526, 30.355187524584036)
+stop_110 = stop(110, "Akademmistechko", 50.465015978082526, 30.355187524584036, (98, 106))
 stop_111 = stop(111, "Zhytomyrska", 50.4562624472573, 30.365438029230255)
 stop_112 = stop(112, "Sviatoshyn", 50.45776584808692, 30.39065662860456)
 stop_113 = stop(113, "Nyvky", 50.458646796231385, 30.404370570917912)
@@ -75,7 +76,7 @@ stop_127.add_connection(stop_126, 1.3)
 
 
 #LINEA 2
-stop_210 = stop(210, "Heroiv Dnipra", 50.522740115696095, 30.498865386439537)
+stop_210 = stop(210, "Heroiv Dnipra", 50.522740115696095, 30.498865386439537, (412, 51))
 stop_211 = stop(211, "Misnka", 50.512393659306554, 30.498569221632515)
 stop_212 = stop(212, "Obolon", 50.501581630277876, 30.498181213966017)
 stop_213 = stop(213, "Petrivka", 50.486128624743856, 30.497810402147852)
@@ -225,3 +226,19 @@ stop_218.add_connection(stop_315, 1.2)
 stop_314.add_connection(stop_119, 0.601)
 stop_315.add_connection(stop_218, 1.2)
 
+
+def buscar_nombre(id):
+    for parada in paradas.lista_paradas:
+        if parada.id == id:
+            return parada
+    return "Not found"
+
+import paradas
+
+def which_stop(x,y):
+    for parada in paradas.lista_paradas:
+        ret = parada.is_in_circle(x,y)
+        if ret is None or False:
+            continue
+        elif ret is parada:
+            return ret
