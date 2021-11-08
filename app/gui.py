@@ -1,45 +1,22 @@
-import tkinter as tk
-from tkinter import PhotoImage
 from tkinter.constants import *
-import tkinter.font as tkFont
 import backend as bk
 import database as db
-import paradas as pds
-from PIL import Image,ImageTk, ImageDraw
-import rounded as rd
-import coord_map as coord
-import stop
 import turtle as t
 
 HEIGHT = 1000
 WIDTH = 1000
 
-""""
-main_window = tk.Tk()
-main_window.title("Metro Kiev")
-main_window.geometry(str(HEIGHT) + "x" + str(WIDTH))
-main_window.config(bg='white')
-canvas = tk.Canvas(master = main_window, width = WIDTH, height = HEIGHT)
-"""
+""" Resizer Imagen del metro """
+#img = Image.open("./app/img/metrobien.png")
+#img = img.resize((900,900),Image.ANTIALIAS)
+#img.save("./app/img/metrobienresized.png")
 
-""" Fuente del texto de la ruta """
-#fontStyle = tkFont.Font(family="Lucida Grande", size=12)
-
-""" Imagen del metro """
-img = Image.open("./app/img/metrobien.png")
-img = img.resize((900,900),Image.ANTIALIAS)
-img.save("./app/img/metrobienresized.png")
-#metro = ImageTk.PhotoImage(img)
-#metro_canvas = tk.PhotoImage(file="./app/MetroKiev.png")
-#canvas.create_image(0,0,image=metro_canvas,anchor="nw")
-#canvas.pack()
-#label = tk.Label(canvas,image=metro)
-#label.place(x=70, y=90)
-
+""" Variables globales """
 inicio = None
 destino = None
-pulsado = False
+buscaSegundaParada = False
 
+# Dibujar camino dada una lista
 def draw_path(path):
     if path == None:
         print("Can't draw an empty path")
@@ -51,52 +28,49 @@ def draw_path(path):
     for parada in path:
         a.pendown()
         a.goto(parada.coords[0],parada.coords[1])
-        a.penup()
+        a.penup(3)
 
-
-
-
+# Llama a A* con las dos paradas
 def printcoords(x,y):
-    #outputting x and y coords to console
-    global inicio, destino, pulsado, a
+    global inicio, destino, buscaSegundaParada, a
+    # Muestra las coordenadas del click por consola
     print (x,y)
-    #mouseclick event
     
-    
-    if pulsado == False:
+    # Primera parada
+    if buscaSegundaParada == False:
         inicio = db.which_stop(x, y)
         if inicio is None:
             return
+        # Muestra el inicio por consola
         print("Inicio: " + str(inicio))
-        pulsado = True
+        buscaSegundaParada = True
+    # Segunda parada
     else:
         destino = db.which_stop(x, y)
         if destino is None:
             return
+        # Muestra el destino por consola y reinicia el buscador
         print("Destino: " + str(destino))
         print()
-        pulsado = False
+        buscaSegundaParada = False
+        # Dibuja el camino
         path = bk.a_estrella(inicio,destino)
-        draw_path(path)
-        return 
+        draw_path(path) 
+ 
     
-#main_window.bind("<Button 1>",printcoords)
-
+""" Ventanta principal """
 win = t.Screen()
+# Background
 win.bgpic("./app/img/metrobienresized.png")
 win.setup(height=HEIGHT, width=WIDTH)
 win.title("Metro Kiev")
+#Selecciona a una parada
 win.onclick(printcoords,1)
+
+#Pintar camino
 a = t.RawTurtle(win)
 a.hideturtle()
 a.pen(pencolor="yellow",pensize=10)
 
-
-
-
+# Llama en un bucle al programa
 t.mainloop()
-
-
-
-    
-    
