@@ -28,7 +28,7 @@ canvas = tk.Canvas(master = main_window, width = WIDTH, height = HEIGHT)
 """ Imagen del metro """
 img = Image.open("./app/img/metrobien.png")
 img = img.resize((900,900),Image.ANTIALIAS)
-img.save("./app/img/metrobien2.png")
+img.save("./app/img/metrobienresized.png")
 #metro = ImageTk.PhotoImage(img)
 #metro_canvas = tk.PhotoImage(file="./app/MetroKiev.png")
 #canvas.create_image(0,0,image=metro_canvas,anchor="nw")
@@ -83,7 +83,7 @@ def printcoords(x,y):
 #main_window.bind("<Button 1>",printcoords)
 
 win = t.Screen()
-win.bgpic("./app/img/metrobien2.png")
+win.bgpic("./app/img/metrobienresized.png")
 win.setup(height=HEIGHT, width=WIDTH)
 win.title("Metro Kiev")
 win.onclick(printcoords,1)
