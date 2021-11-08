@@ -28,7 +28,7 @@ def draw_path(path):
     for parada in path:
         a.pendown()
         a.goto(parada.coords[0],parada.coords[1])
-        a.penup(3)
+        a.penup()
 
 # Llama a A* con las dos paradas
 def printcoords(x,y):
