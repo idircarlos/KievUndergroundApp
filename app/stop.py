@@ -16,12 +16,14 @@ class stop:
         self.connections = []
         self.coords = coords
 
-    def add_connection(self, stop, distance):
-        self.connections.append((stop,distance))
-    
     def __repr__(self):
         return self.name
     
+    #Anade una conexion a la lista de conexiones dada la parada y la distancia g
+    def add_connection(self, stop, distance):
+        self.connections.append((stop,distance))
+    
+    #Comprueba que sus coordenadas esten en el circulo dado
     def is_in_circle (self, xp, yp):
         if self.coords == None:
             return False
