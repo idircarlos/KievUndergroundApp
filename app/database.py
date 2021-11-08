@@ -1,5 +1,5 @@
 from stop import *
-
+import paradas
 
 #LINEA 1
 stop_110 = stop(110, "Akademmistechko", 50.465015978082526, 30.355187524584036, (98, 106))
@@ -227,14 +227,9 @@ stop_314.add_connection(stop_119, 0.601)
 stop_315.add_connection(stop_218, 1.2)
 
 
-def buscar_nombre(id):
-    for parada in paradas.lista_paradas:
-        if parada.id == id:
-            return parada
-    return "Not found"
+""" METODOS DE LA CLASE """
 
-import paradas
-
+#Encontrar la parada dadas unas coordenadas
 def which_stop(x,y):
     for parada in paradas.lista_paradas:
         ret = parada.is_in_circle(x,y)
