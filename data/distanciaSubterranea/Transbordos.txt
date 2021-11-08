@@ -2,3 +2,7 @@
 119-314 : 1min -> 601m
 218-315 : 2min -> 1,2km
 Vel.tren : 36,11km/h -> 0,6018km/min
+
+Informacion sacada de:
+www.metro.kyiv.ua
+en.wikipedia.org
