@@ -26,9 +26,9 @@ canvas = tk.Canvas(master = main_window, width = WIDTH, height = HEIGHT)
 #fontStyle = tkFont.Font(family="Lucida Grande", size=12)
 
 """ Imagen del metro """
-img = Image.open("./app/img/metrobien.png")
-img = img.resize((900,900),Image.ANTIALIAS)
-img.save("./app/img/metrobienresized.png")
+#img = Image.open("./app/img/metrobien.png")
+#img = img.resize((900,900),Image.ANTIALIAS)
+#img.save("./app/img/metrobienresized.png")
 #metro = ImageTk.PhotoImage(img)
 #metro_canvas = tk.PhotoImage(file="./app/MetroKiev.png")
 #canvas.create_image(0,0,image=metro_canvas,anchor="nw")
