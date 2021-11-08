@@ -25,22 +25,22 @@ def draw_path(path):
     a.speed(0)
     a.goto((path[0].coords[0], path[0].coords[1]))
     a.speed(2.5)
-    
     for parada in path:
-        a.color('yellow')
         a.pendown()
         a.goto(parada.coords[0],parada.coords[1])
         a.penup()
-        
-    a.goto(path[0].coords[0], path[0].coords[0])
-    a.showturtle()
+    
+    a.color('black')
     for parada in path:
-        a.color('black') 
-        a.pendown()
+        a.goto(parada.coords[0], parada.coords[1])
+        a.showturtle()
         if parada is not path[-1]:
             a.dot(15)
-        a.penup()
-        a.goto(parada.coords[0],parada.coords[1])
+
+    a.color('purple')
+      
+    
+        
 
 # Llama a A* con las dos paradas
 def printcoords(x,y):
@@ -83,8 +83,8 @@ win.onclick(printcoords,1)
 #Pintar camino
 a = t.RawTurtle(win)
 a.hideturtle()
-a.pen(pensize=10)
-a.color('yellow')
+a.pen(pensize=6)
+a.color('purple')
 a.shape("./app/img/icono_metro.gif")
 # Llama en un bucle al programa
 t.mainloop()
