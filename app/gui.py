@@ -38,6 +38,8 @@ def draw_path(path):
             a.dot(15)
 
     a.color('purple')
+    a.hideturtle()
+    a.stamp()
       
     
         
