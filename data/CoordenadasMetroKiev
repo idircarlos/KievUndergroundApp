@@ -18,8 +18,6 @@ LINEA 1:
 (126)Chernihivska : 50.45989135620235, 30.63029161718559
 (127)Lisova : 50.46465878887907, 30.645564379174083
 
- 
-
 LINEA 2:
 (210)Heroiv Dnipra : 50.522740115696095, 30.498865386439537
 (211)Misnka : 50.512393659306554, 30.498569221632515
@@ -58,12 +56,5 @@ LINEA 3:
 (326)Boryspilska: 50.403465565753365, 30.684370370647205
 (327)Chervonyi khutir: 50.40954636743697, 30.69623245641607
 
-TRANSBORDOS:
-120-217 : 1min -> 601m
-119-314 : 1min -> 601m
-218-315 : 2min -> 1,2km
-Vel.tren : 36,11km/h -> 0,6018km/min
-
 Informacion sacada de:
-www.metro.kyiv.ua
 https://www.google.com/maps/?hl=es
