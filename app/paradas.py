@@ -61,6 +61,7 @@ lista_paradas.append(db.stop_325)
 lista_paradas.append(db.stop_326)
 lista_paradas.append(db.stop_327)
 
+# Devuelve una parada dado un id
 def buscar_parada(id):
     for parada in lista_paradas:
         if parada.id == id:
