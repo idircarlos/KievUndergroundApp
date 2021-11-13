@@ -15,6 +15,7 @@ WIDTH = 1267
 inicio = None
 destino = None
 buscaSegundaParada = False
+otroViaje = False
 
 # Dibujar camino dada una lista
 def draw_path(path):
@@ -41,12 +42,32 @@ def draw_path(path):
     a.hideturtle()
     a.stamp()
       
-    
-        
+# Comprueba si se ha clickado la flecha    
+def inFlecha(x,y):
+    if x > 1  and y > 1 :
+        return True 
+    return False       
+# Comprueba si se ha clickado el reset
+def inReset(x,y):
+    if x > 1 and x < 2 and y > 1 and y < 2:
+        return True 
+    return False
+
+# Dibuja el id de la parada
+def dibujarParada(parada, id):
+    s = "Has seleccionado: "+id
+    a.color('black')
+    if parada == 1:
+        a.goto((-300, 50))
+    elif parada == 2:
+        a.goto()
+    a.pendown()
+    a.write(s,align=CENTER, font=('Arial', 14, 'Normal'))
+    a.penup()
 
 # Llama a A* con las dos paradas
 def printcoords(x,y):
-    global inicio, destino, buscaSegundaParada, a
+    global inicio, destino, buscaSegundaParada, otroViaje, a
     # Muestra las coordenadas del click por consola
     print (x,y)
     
@@ -58,25 +79,46 @@ def printcoords(x,y):
         # Muestra el inicio por consola
         print("Inicio: " + str(inicio))
         buscaSegundaParada = True
+        win.bgpic("./app/img/metrobienresized2.png")
+        dibujarParada(1, inicio.id)
+        
     # Segunda parada
     else:
+        if otroViaje == True: 
+            if inFlecha(x,y):
+                a.clear()
+                otroViaje = False
+                win.bgpic("./app/img/metrobienresized1.png")     
+            if inReset(x,y):
+                a.clear()
+                buscaSegundaParada = False
+                otroViaje = False
+                win.bgpic("./app/img/metrobienresized2.png")  
+        
+        if inFlecha(x,y):
+            a.clear()
+            buscaSegundaParada = False
+            win.bgpic("./app/img/metrobienresized1.png")  
+        
         destino = db.which_stop(x, y)
         if destino is None:
             return
         # Muestra el destino por consola y reinicia el buscador
         print("Destino: " + str(destino))
         print()
-        buscaSegundaParada = False
         # Dibuja el camino
         path = bk.a_estrella(inicio,destino)
         draw_path(path) 
+        win.bgpic("./app/img/metrobienresized3.png")
+        dibujarParada(2,destino.id)
+        otroViaje = True
  
     
 """ Ventanta principal """
 win = t.Screen()
 win.setup(width=WIDTH, height=HEIGHT, startx=None, starty=None)
 # Background
-win.bgpic("./app/img/metrobienresized2.png")
+win.bgpic("./app/img/metrobienresized1.png")
 win.setup(height=HEIGHT, width=WIDTH)
 win.title("Metro Kiev")
 win.register_shape("./app/img/icono_metro.gif")
