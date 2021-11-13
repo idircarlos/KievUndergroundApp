@@ -43,18 +43,18 @@ def draw_path(path):
     a.stamp()
       
 # Comprueba si se ha clickado la flecha    
-def inFlecha(x,y):
+def in_flecha(x,y):
     if x > 1  and y > 1 :
         return True 
     return False       
 # Comprueba si se ha clickado el reset
-def inReset(x,y):
+def in_reset(x,y):
     if x > 1 and x < 2 and y > 1 and y < 2:
         return True 
     return False
 
 # Dibuja el id de la parada
-def dibujarParada(parada, id):
+def dibujar_parada(parada, id):
     s = "Has seleccionado: "+id
     a.color('black')
     if parada == 1:
@@ -80,22 +80,22 @@ def printcoords(x,y):
         print("Inicio: " + str(inicio))
         buscaSegundaParada = True
         win.bgpic("./app/img/metrobienresized2.png")
-        dibujarParada(1, inicio.id)
+        dibujar_parada(1, inicio.id)
         
     # Segunda parada
     else:
         if otroViaje == True: 
-            if inFlecha(x,y):
+            if in_flecha(x,y):
                 a.clear()
                 otroViaje = False
                 win.bgpic("./app/img/metrobienresized1.png")     
-            if inReset(x,y):
+            if in_reset(x,y):
                 a.clear()
                 buscaSegundaParada = False
                 otroViaje = False
                 win.bgpic("./app/img/metrobienresized2.png")  
         
-        if inFlecha(x,y):
+        if in_flecha(x,y):
             a.clear()
             buscaSegundaParada = False
             win.bgpic("./app/img/metrobienresized1.png")  
@@ -110,7 +110,7 @@ def printcoords(x,y):
         path = bk.a_estrella(inicio,destino)
         draw_path(path) 
         win.bgpic("./app/img/metrobienresized3.png")
-        dibujarParada(2,destino.id)
+        dibujar_parada(2,destino.id)
         otroViaje = True
  
     
