@@ -3,8 +3,8 @@ import backend as bk
 import database as db
 import turtle as t
 
-HEIGHT = 1000
-WIDTH = 1000
+HEIGHT = 900
+WIDTH = 1267
 
 """ Resizer Imagen del metro """
 #img = Image.open("./app/img/metrobien.png")
@@ -74,8 +74,9 @@ def printcoords(x,y):
     
 """ Ventanta principal """
 win = t.Screen()
+win.setup(width=WIDTH, height=HEIGHT, startx=None, starty=None)
 # Background
-win.bgpic("./app/img/metrobienresized.png")
+win.bgpic("./app/img/metrobienresized2.png")
 win.setup(height=HEIGHT, width=WIDTH)
 win.title("Metro Kiev")
 win.register_shape("./app/img/icono_metro.gif")
@@ -84,6 +85,11 @@ win.onclick(printcoords,1)
 
 #Pintar camino
 a = t.RawTurtle(win)
+a.speed(0)
+a.penup()
+a.goto((-455.0, 397.0))
+a.pen(pensize=6)
+a.write("AAaaaAAAAA",align=CENTER,font=("Arial",20,'normal'))
 a.hideturtle()
 a.pen(pensize=6)
 a.color('purple')
