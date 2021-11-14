@@ -46,7 +46,7 @@ def draw_path(path):
     for parada in path:
         a.goto(parada.coords[0], parada.coords[1])
         a.showturtle()
-        if parada is not path[-1]:
+        if parada is not path[-1] and parada is not path[0]:
             a.dot(15)
         if index+1 < len(path) and ((parada.id == 314 and path[index+1].id == 315) or (parada.id == 315 and path[index+1].id == 314)):
             a.goto(162,22)
@@ -144,6 +144,11 @@ def printcoords(x,y):
         destino = db.which_stop(x, y)
         if destino is None:
             return
+        a.penup()
+        a.goto(destino.coords[0], destino.coords[1])
+        a.color('#8c8a89')
+        a.penup()
+        a.dot(15)
         # Muestra el destino por consola y reinicia el buscador
         print("Destino: " + str(destino))
         print()
