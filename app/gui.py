@@ -88,12 +88,12 @@ def printcoords(x,y):
             if in_flecha(x,y):
                 a.clear()
                 otroViaje = False
-                win.bgpic("./app/img/metrobienresized1.png")     
+                win.bgpic("./app/img/metrobienresized2.png")     
             if in_reset(x,y):
                 a.clear()
                 buscaSegundaParada = False
                 otroViaje = False
-                win.bgpic("./app/img/metrobienresized2.png")  
+                win.bgpic("./app/img/metrobienresized1.png")  
         
         if in_flecha(x,y):
             a.clear()
