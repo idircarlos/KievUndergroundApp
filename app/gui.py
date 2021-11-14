@@ -115,6 +115,12 @@ def printcoords(x,y):
             if in_flecha(x,y):
                 a.clear()
                 dibujar_parada(1,inicio.id)
+                a.penup()
+                a.goto(inicio.coords[0], inicio.coords[1])
+                a.color('#8c8a89')
+                a.penup()
+                a.dot(15)
+                
                 otroViaje = False
                 win.bgpic("./app/img/metrobienresized2.png")     
             if in_reset(x,y):
