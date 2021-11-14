@@ -102,6 +102,11 @@ def printcoords(x,y):
         inicio = db.which_stop(x, y)
         if inicio is None:
             return
+        a.penup()
+        a.goto(inicio.coords[0], inicio.coords[1])
+        a.color('#8c8a89')
+        a.penup()
+        a.dot(15)
         # Muestra el inicio por consola
         print("Inicio: " + str(inicio))
         buscaSegundaParada = True
