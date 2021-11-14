@@ -111,6 +111,7 @@ def printcoords(x,y):
     # Segunda parada
     else:
         if otroViaje == True: 
+            dibujando = False
             if in_flecha(x,y):
                 a.clear()
                 dibujar_parada(1,inicio.id)
