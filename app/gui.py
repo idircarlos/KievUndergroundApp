@@ -16,11 +16,13 @@ inicio = None
 destino = None
 buscaSegundaParada = False
 otroViaje = False
-color = '#d1b04b'
+dibujando = False
+color_line = '#d1b04b'
 # Dibujar camino dada una lista
 def draw_path(path):
-    visited = False
-    a.color(color)
+    global otroViaje
+    index = 0
+    a.color(color_line)
     if path == None:
         print("Can't draw an empty path")
         return
@@ -28,29 +30,33 @@ def draw_path(path):
     a.speed(0)
     a.goto((path[0].coords[0], path[0].coords[1]))
     a.speed(2.5)
-    for parada in path:
+    while index < len(path):
+        parada = path[index]
         a.pendown()
         a.goto(parada.coords[0],parada.coords[1])
-        if parada.id == 219 or parada.id == 218 or parada.id == 119:
-            visited = True 
-        if not visited and (parada.id == 314 or parada.id == 315):
-            visited = True
+        if index+1 < len(path) and (parada.id == 314 and path[index+1].id == 315) or (parada.id == 315 and path[index+1].id == 314):
             a.goto(162,22)
         a.penup()
+        index = index + 1
     a.speed(0)
     a.goto(path[0].coords[0],path[0].coords[1])
     a.speed(2.5)
     a.color('black')
+    index = 0
     for parada in path:
         a.goto(parada.coords[0], parada.coords[1])
         a.showturtle()
         if parada is not path[-1]:
             a.dot(15)
-    a.color(color)
+        if index+1 < len(path) and (parada.id == 314 and path[index+1].id == 315) or (parada.id == 315 and path[index+1].id == 314):
+            a.goto(162,22)
+        index = index + 1
+    a.color(color_line)
     a.hideturtle()
     a.stamp()
     a.penup()
     win.bgpic("./app/img/metrobienresized3.png")
+    otroViaje = True
       
 # Comprueba si se ha clickado la flecha    
 def in_flecha(x,y):
@@ -87,7 +93,7 @@ def color_boli(id):
     
 # Llama a A* con las dos paradas
 def printcoords(x,y):
-    global inicio, destino, buscaSegundaParada, otroViaje, a
+    global inicio, destino, buscaSegundaParada, otroViaje, dibujando, a
     # Muestra las coordenadas del click por consola
     print (x,y)
     
@@ -117,7 +123,7 @@ def printcoords(x,y):
                 win.bgpic("./app/img/metrobienresized1.png")
             return
         
-        if in_flecha(x,y):
+        elif not dibujando and in_flecha(x,y):
             a.clear()
             buscaSegundaParada = False
             win.bgpic("./app/img/metrobienresized1.png")
@@ -133,8 +139,8 @@ def printcoords(x,y):
         path = bk.a_estrella(inicio,destino)
         win.bgpic("./app/img/metrobienresized2-5.png")
         dibujar_parada(2,destino.id)
+        dibujando = True
         draw_path(path)
-        otroViaje = True
  
     
 """ Ventanta principal """
@@ -151,9 +157,6 @@ win.onclick(printcoords,1)
 #Pintar camino
 a = t.RawTurtle(win)
 a.speed(0)
-#a.penup()
-#a.goto((-455.0, 397.0))
-#a.pen(pensize=6)
 a.hideturtle()
 a.pen(pensize=6)
 a.color('purple')
