@@ -19,6 +19,8 @@ otroViaje = False
 
 # Dibujar camino dada una lista
 def draw_path(path):
+    visited = False
+    a.color('purple')
     if path == None:
         print("Can't draw an empty path")
         return
@@ -29,6 +31,9 @@ def draw_path(path):
     for parada in path:
         a.pendown()
         a.goto(parada.coords[0],parada.coords[1])
+        if not visited and (parada.id == 314 or parada.id == 315):
+            visited = True
+            a.goto(162,22)
         a.penup()
     
     a.color('black')
@@ -37,34 +42,45 @@ def draw_path(path):
         a.showturtle()
         if parada is not path[-1]:
             a.dot(15)
-
     a.color('purple')
     a.hideturtle()
     a.stamp()
+    a.penup()
+    win.bgpic("./app/img/metrobienresized3.png")
       
 # Comprueba si se ha clickado la flecha    
 def in_flecha(x,y):
-    if x > 1  and y > 1 :
+    if x > -603 and x < -523 and y > -410 and y < -382:
         return True 
     return False       
 # Comprueba si se ha clickado el reset
 def in_reset(x,y):
-    if x > 1 and x < 2 and y > 1 and y < 2:
+    if x > -484 and x < -268 and y > -425 and y < -365:
         return True 
     return False
 
 # Dibuja el id de la parada
 def dibujar_parada(parada, id):
-    s = "Has seleccionado: "+id
-    a.color('black')
+    a.speed(0)
+    s = str(id)
+    color_boli(id)
+    a.penup()
     if parada == 1:
-        a.goto((-300, 50))
+        a.goto((-400.0, 209.5))
     elif parada == 2:
-        a.goto()
+        a.goto((-400.0, -2))
     a.pendown()
-    a.write(s,align=CENTER, font=('Arial', 14, 'Normal'))
+    a.write(s,align=CENTER, font=('Arial', 14, 'normal'))
     a.penup()
 
+def color_boli(id):
+    if id > 300:
+        a.color('green')
+    elif id > 200:
+        a.color('blue')
+    elif id > 100:
+        a.color('red')
+    
 # Llama a A* con las dos paradas
 def printcoords(x,y):
     global inicio, destino, buscaSegundaParada, otroViaje, a
@@ -87,18 +103,21 @@ def printcoords(x,y):
         if otroViaje == True: 
             if in_flecha(x,y):
                 a.clear()
+                dibujar_parada(1,inicio.id)
                 otroViaje = False
                 win.bgpic("./app/img/metrobienresized2.png")     
             if in_reset(x,y):
                 a.clear()
                 buscaSegundaParada = False
                 otroViaje = False
-                win.bgpic("./app/img/metrobienresized1.png")  
+                win.bgpic("./app/img/metrobienresized1.png")
+            return
         
         if in_flecha(x,y):
             a.clear()
             buscaSegundaParada = False
-            win.bgpic("./app/img/metrobienresized1.png")  
+            win.bgpic("./app/img/metrobienresized1.png")
+            return
         
         destino = db.which_stop(x, y)
         if destino is None:
@@ -108,9 +127,9 @@ def printcoords(x,y):
         print()
         # Dibuja el camino
         path = bk.a_estrella(inicio,destino)
-        draw_path(path) 
-        win.bgpic("./app/img/metrobienresized3.png")
+        win.bgpic("./app/img/metrobienresized2-5.png")
         dibujar_parada(2,destino.id)
+        draw_path(path)
         otroViaje = True
  
     
@@ -128,13 +147,13 @@ win.onclick(printcoords,1)
 #Pintar camino
 a = t.RawTurtle(win)
 a.speed(0)
-a.penup()
-a.goto((-455.0, 397.0))
-a.pen(pensize=6)
-a.write("AAaaaAAAAA",align=CENTER,font=("Arial",20,'normal'))
+#a.penup()
+#a.goto((-455.0, 397.0))
+#a.pen(pensize=6)
 a.hideturtle()
 a.pen(pensize=6)
 a.color('purple')
 a.shape("./app/img/icono_metro.gif")
+a.penup()
 # Llama en un bucle al programa
 t.mainloop()
