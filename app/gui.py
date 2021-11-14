@@ -16,11 +16,11 @@ inicio = None
 destino = None
 buscaSegundaParada = False
 otroViaje = False
-
+color = '#d1b04b'
 # Dibujar camino dada una lista
 def draw_path(path):
     visited = False
-    a.color('purple')
+    a.color(color)
     if path == None:
         print("Can't draw an empty path")
         return
@@ -31,18 +31,22 @@ def draw_path(path):
     for parada in path:
         a.pendown()
         a.goto(parada.coords[0],parada.coords[1])
+        if parada.id == 219 or parada.id == 218 or parada.id == 119:
+            visited = True 
         if not visited and (parada.id == 314 or parada.id == 315):
             visited = True
             a.goto(162,22)
         a.penup()
-    
+    a.speed(0)
+    a.goto(path[0].coords[0],path[0].coords[1])
+    a.speed(2.5)
     a.color('black')
     for parada in path:
         a.goto(parada.coords[0], parada.coords[1])
         a.showturtle()
         if parada is not path[-1]:
             a.dot(15)
-    a.color('purple')
+    a.color(color)
     a.hideturtle()
     a.stamp()
     a.penup()
